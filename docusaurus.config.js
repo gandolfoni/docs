@@ -37,15 +37,14 @@ function defineSection(section, options = {}) {
 
 const SECTIONS = [
   defineSection('osmosis-core'),
+  defineSection('osmosis-outpost'),
   defineSection('localosmosis'),
-  defineSection('networks'),
   defineSection('cosmwasm'),
   defineSection('frontend'),
   defineSection('beaker'),
   defineSection('telescope'),
   defineSection('osmojs'),
   defineSection('overview'),
-  defineSection('apis'),
 ];
 
 /** @type {import('@docusaurus/types').Config} */
@@ -136,21 +135,15 @@ const config = {
         items: [
           {
             label: 'Overview',
-            to: '/overview',
+            to: 'overview/educate',
             position: 'left',
           },
           {
             label: 'Develop',
             to: 'osmosis-core',
-            position: 'left',
+            position: 'right',
             // className: 'new-badge',
             activeBaseRegex: '(.*ui-kit|.*web-core)',
-          },
-          {
-            label: 'Networks',
-            to: '/networks',
-            position: 'left',
-            // className: 'new-badge',
           },
           {
             label: 'Integrate',
@@ -158,14 +151,19 @@ const config = {
             position: 'left',
           },
           {
-            label: 'Validate',
+            label: 'Validate & Run your Node',
             to: 'overview/validate',
             position: 'left',
           },
           {
-            label: 'API Reference',
-            to: 'apis',
-            position: 'right',
+            label: 'Endpoints',
+            to: 'overview/endpoints',
+            position: 'left',
+          },
+          {
+            label: 'Features',
+            to: 'overview/features',
+            position: 'left',
           },
           {
             href: 'https://github.com/osmosis-labs',
@@ -187,7 +185,7 @@ const config = {
             position: 'right',
             className: 'dev-portal-signup dev-portal-link',
           },
-        
+
         ],
       },
       footer: {
@@ -234,7 +232,7 @@ const config = {
             ],
           },
         ],
-        copyright: 'Copyright © Osmosis Labs since 2021. All rights reserved.',
+        copyright: 'Copyright © Osmosis Labs since 2023. All rights reserved.',
       },
       prism: {
         theme: lightCodeTheme,
@@ -247,6 +245,8 @@ const config = {
           'java',
           'swift',
           'objectivec',
+          'rust',
+          'toml',
         ],
       },
       liveCodeBlock: {
@@ -263,18 +263,18 @@ const config = {
         apiKey: '00',
       },
     }),
-    scripts: [
-      "https://tally.so/widgets/embed.js",
-      {
-            src: "https://widget.kapa.ai/kapa-widget.bundle.js",
-            "data-website-id": "c5b5e9fc-d025-4c12-b08e-9784d0e2161f",
-            "data-project-name": "Osmosis",
-            "data-project-color": "#7900B4",
-            "data-project-logo":
-              "https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fosmo.svg&w=64&q=75",
-            async: true,
-          },
-    ],
-  };
+  scripts: [
+    "https://tally.so/widgets/embed.js",
+    {
+      src: "https://widget.kapa.ai/kapa-widget.bundle.js",
+      "data-website-id": "c5b5e9fc-d025-4c12-b08e-9784d0e2161f",
+      "data-project-name": "Osmosis",
+      "data-project-color": "#7900B4",
+      "data-project-logo":
+        "https://app.osmosis.zone/tokens/osmo.svg",
+      async: true,
+    },
+  ],
+};
 
 module.exports = config;

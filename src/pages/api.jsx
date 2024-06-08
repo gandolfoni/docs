@@ -11,7 +11,7 @@ import SectionsMenu from '../components/SectionsMenu';
 
 const API_TOOLTIP_KEY = 'dyte-api-v2-tooltip-shown';
 
-function APIElement({ layout = 'sidebar', currentVersion = 'RPC' }) {
+function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
   return (
     <BrowserOnly
       fallback={
@@ -31,7 +31,7 @@ function APIElement({ layout = 'sidebar', currentVersion = 'RPC' }) {
               basePath="/"
               router="hash"
               layout={layout}
-              hideSchemas
+              hideSchemas={false}
               className="stacked"
             />
           </div>
@@ -49,7 +49,7 @@ export default function Home() {
   const location = router.location;
 
   const url = new URL(
-    `https://docs.dyte.io${location.pathname}${location.search}`
+    `https://docs.osmosis.zone/${location.pathname}${location.search}`
   );
 
   const currentVersion = url.searchParams.get('v') || 'RPC';
@@ -76,7 +76,7 @@ export default function Home() {
       <div className="header">
         <h2>Osmosis {currentVersion} endpoints</h2>
         <div className="aside">
-          <a className="navbar__item navbar__link dev-portal-signup dev-postman-link"  target='_blank' href='https://www.postman.com/flight-astronomer-81853429/workspace/osmosis' rel="noreferrer">Open Postman Collection</a>
+          <a className="navbar__item navbar__link dev-portal-signup dev-postman-link" target='_blank' href='https://www.postman.com/flight-astronomer-81853429/workspace/osmosis' rel="noreferrer">Open Postman Collection</a>
 
           <DyteTooltip
             placement="bottom"

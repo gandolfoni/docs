@@ -21,7 +21,7 @@
 * **`gas_adjustment`** : f64  
   
    > 
-   > Adjusting `gas_limit` from simulated gas as a safety factor to make sure gas_limit is enought for the tx.  
+   > Adjusting `gas_limit` from simulated gas as a safety factor to make sure gas_limit is enough for the tx.  
    > When user doesn't specify `gas_limit`, `gas_limit = simulated_gas * gas_adjustment`,  
    > while `simulated_gas` is simulated gas consumption for the tx.  
    > 
@@ -147,7 +147,7 @@ grpc_endpoint = 'http://localhost:9090'
 rpc_endpoint = 'http://localhost:26657'
 
 [networks.testnet]
-chain_id = 'osmo-test-4'
+chain_id = 'osmo-test-5'
 network_variant = 'Shared'
 grpc_endpoint = 'https://grpc-test.osmosis.zone:443'
 rpc_endpoint = 'https://rpc.testnet.osmosis.zone'

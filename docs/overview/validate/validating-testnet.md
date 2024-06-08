@@ -2,7 +2,7 @@
 
 ## Synced Node
 
-Before creating a testnet validator, ensure you have first followed the instructions on how to [join the testnet](/networks/join-testnet)
+Before creating a testnet validator, ensure you have first followed the instructions on how to [join the testnet](/overview/endpoints)
 
 ## Initialize Wallet Keyring
 
@@ -64,7 +64,7 @@ osmosisd tx staking create-validator \
 --pubkey=$(osmosisd tendermint show-validator)  \
 --moniker="Wosmongton" \
 --security-contact="wosmongton@osmosis.labs" \
---chain-id="osmo-test-4" \
+--chain-id="osmo-test-5" \
 --commission-rate="0.1" \
 --commission-max-rate="0.2" \
 --commission-max-change-rate="0.05" \
@@ -91,7 +91,7 @@ If you inspect your `create-validator` transaction in the explorer, and see the 
 out of gas in location: WritePerByte; gasWanted: 177140, gasUsed: 177979: out of gas
 ```
 
-Please try subsituting:
+Please try substituting:
 ```
 --gas="auto" \
 --gas-prices="0.0025uosmo"
@@ -134,11 +134,11 @@ osmosisd tendermint show-validator
 Use your validators public key queried above:
 
 ```bash
-osmosisd query slashing signing-info [validator-pubkey] --chain-id osmo-test-4
+osmosisd query slashing signing-info [validator-pubkey] --chain-id osmo-test-5
 ```
 
 Example:
 
 ```bash
-osmosisd query slashing signing-info '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"HlixoxNZBPq4pBOYEimtSq9Ak4peBISVsIbI5ZHrEAU="}' --chain-id osmo-test-4
+osmosisd query slashing signing-info '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"HlixoxNZBPq4pBOYEimtSq9Ak4peBISVsIbI5ZHrEAU="}' --chain-id osmo-test-5
 ```

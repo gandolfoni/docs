@@ -31,6 +31,7 @@ If you are running on an Apple M1 Chip and are running into issues with osmosisd
 
 ```
 git clone https://github.com/osmosis-labs/osmosis.git
+cd osmosis
 make build
 sudo cp build/osmosisd /usr/local/bin
 ```
@@ -59,7 +60,7 @@ sudo apt install git build-essential ufw curl jq snapd --yes
 Install go:
 
 ```bash
-wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.17.2
+wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.19.9
 ```
 
 After installed, open new terminal to properly load go
@@ -79,9 +80,9 @@ git checkout v11.0.1
 make install
 ```
 :::tip Note
-If you came from the testnet node instruction, [click here to return](../networks/join-testnet)
+If you came from the testnet node instruction, [click here to return](../overview/validate)
 
-If you came from the mainnet node instruction, [click here to return](../networks/join-mainnet)
+If you came from the mainnet node instruction, [click here to return](../overview/validate)
 :::
 
 

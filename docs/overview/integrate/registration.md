@@ -1,165 +1,180 @@
-# Registration
+---
+sidebar_position: 4
+---
+# Register your Asset
+This guide intends to support teams looking to enlist their tokenized crypto asset onto the Osmosis Zone app. Assets need to be registered in several locations in order to be displayed correctly on all interfaces.
 
-## How to Register onto the Cosmos Chain Registry
+### Overview
+
+At a very high level, the process entails three main steps:
+ - Registering to the Cosmos Chain Registry,
+ - Registering to Osmosis Labs’ Assetlist Registry, and
+ - Establishing markets for the asset on Osmosis.
+Note that the overall process could require collaboration from knowledgeable technical teams to provide information or services, as well as market-making entities to provide funding for initial liquidity or incentive programs.
+
+To ensure a complete integration with Osmosis Zone and related apps, see the [Osmosis Labs' Assetlist Repository's LISTING.md Document](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md).
+
+### Required Skills
+
+Basic understanding of GitHub, knowing how to fork a repository, create a branch, commit changes, and submit a Pull Request
+
+## Step 1: Register to the Cosmos Chain Registry
 
 ### Purpose
 
-The Cosmos Chain Registry is used as a single source of truth and is used to look up chain and asset data
+The Cosmos Chain Registry is meant to be a public good, used as a single source of truth for chain and asset metadata, as well as IBC connections, interfaces, and tooling supporting Cosmos chains.
 
 ### Prerequisites
 
 - Registered to [SLIP173](https://github.com/satoshilabs/slips/blob/master/slip-0173.md)
-    - See: [How to register a bech32 prefix onto SLIP173](../integrate/registration.md#how-to-register-a-bech32-prefix-onto-slip173)
-- Registered to [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md) (if coin type is not like ATOM)
-    - Note: Coin Type 118 represents the Cosmos Hub's ATOM token, registered listed in [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md); many projects also default to using this coin type, while some have registered their own.
-- Chain added to Mintscan (optional)
-- Assets listed on CoinGecko (optional)
-    - See: [How to enlist assets onto CoinGecko](../integrate/registration.md#how-to-enlist-an-asset-onto-coingecko)
+- Registered to [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md)
+    - Note: Coin Type 118 represents the Cosmos Hub's ATOM token, listed in [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md); many projects also default to using this coin type, while some have registered their own.
 
 ### Requirements
 
 - Chain data--metadata, locations, network addresses, etc.
 - Asset data--metadata, such as name, symbol, minimal denomination, decimal precision, etc.
     - CoinGecko ID
-        - Refer to the latest [CoinGecko Coins List](https://api.coingecko.com/api/v3/coins/list)
+        - Refer to [CoinGecko's Coins List API (v3)](https://api.coingecko.com/api/v3/coins/list)
 - Basic understanding of GitHub, knowing how to fork a repository, create a branch, commit changes, and submit a Pull Request
 
 ### Steps
 
 1. Review the [Cosmos Chain Registry](https://github.com/cosmos/chain-registry) docs:
-    1. [README.md](https://github.com/cosmos/chain-registry/blob/master/README.md)
-    2. [chain.schema.json](https://github.com/cosmos/chain-registry/blob/master/chain.schema.json)
-    3. [assetlist.schema.json](https://github.com/cosmos/chain-registry/blob/master/assetlist.schema.json)
     - Note: It is recommended to refer to another registration to serve as an example, such as [Osmosis' registration](https://github.com/cosmos/chain-registry/blob/master/osmosis/chain.json)
-2. Submit a pull request with necessary changes to the following:
-    - `chain.json`:
-        - Be sure to include `bech32_prefix`
-            - e.g., `"bech32_prefix": "cosmos",`
-        - Be sure to include `slip44` (coin type)
-            - e.g., `"slip44": 118,`
-        - Be sure to include at least one RPC and one REST under `apis`
-        - For explorers, opt for Mintscan, if available
-    - `assetlists.json`:
-        - The `name` of an asset refers to how the asset should be called in persoanl communication, while `symbol` is like a stock ticker, typically in ALL CAPS, and these values may differ.
-            - e.g., `"name": graviton, "display": "graviton", "symbol": "GRAV"`
-        - Be sure to include the CoinGecko ID for each asset where one exists
-            - e.g., `"coingecko_id": "cosmos"`
+2. If registering a new Chain, submit a pull request with necessary changes to the `chain.json` file.
+	- Follow the [chain.schema.json](https://github.com/cosmos/chain-registry/blob/master/chain.schema.json) format.
+	  - Be sure to include `bech32_prefix`.
+		  - e.g., `"bech32_prefix": "cosmos",`
+	  - Be sure to include `slip44` (coin type).
+		  - e.g., `"slip44": 118,`
+	  - Be sure to include at least one RPC and one REST under `apis`.
+    - Be sure to include at least one working Block Explorer.
+  - Note that to enlisted on Osmosis, an IBC connection will need to be set up and registered (in `/_IBC/`) at the Chgain Registry.
+3. If registering a new Asset, submit a pull request with necessary changes to the `assetlists.json` file.
+	- Follow the [assetlist.schema.json](https://github.com/cosmos/chain-registry/blob/master/assetlist.schema.json) format.
+	  - `name` refers to how the asset should be called when spoken in conversation.
+    - `symbol` refers to ticker symbol, like how a stock or other securities use a shortened representation. Typically in ALL CAPS.
+      - e.g., TSLA for Telsa stock, or ATOM for Cosmos Hub's Atom.
+    - `description` provides a brief description of the asset.
+      - e.g., "Atom is the native staking and fee token of Cosmos Hub."
+    - `extended_description` provides additional context about the project in which the asset participates.
+    - `socials` allows for registering a website and X (formerly Twitter) profile.
+	  - `coingecko_id` if one exists
+		  - e.g., `"coingecko_id": "cosmos"`
+  - Be sure to include a high quality logo image.
 
 
-## How to Register an Asset onto the Osmosis Assetlists Registry
+## Step 2: Register an Asset to the Osmosis Labs' Assetlist Registry
 
 ### Purpose
 
-The Osmosis Assetlists Registry is used as a local source of truth for assets displayed on Osmosis' front end.
+The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed on the Osmosis Zone app.
 
 ### Prerequisites
 
 - Registered onto the Cosmos Chain Registry
-    - See: [How to register onto the Cosmos Chain Registry](../integrate/registration.md#how-to-register-onto-the-cosmos-chain-registry)
-- Opened IBC connection between the source chain and Osmosis
-    - Selected a sole desigate IBC connection between the registering chain and Osmosis for this asset
-        - All native assets from a chain should go through a single connection, but CW20 tokens can be sent through another connection
-- There is a liquidity pool on Osmosis with sufficient liquidity.
-	- See: [Liquidity](../integrate/liquidity.md)
-	- See: [GAMM Module: Create pool](../../osmosis-core/modules/gamm/#create-pool) for the CLI command to create a pool
-- Assets listed on CoinGecko (optional)
+    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/overview/integrate/registration#step-1-register-onto-the-cosmos-chain-registry)
+- IBC Connection
+  - Established an IBC connection between the source chain and Osmosis
+    - All native assets from a chain should go through a single connection, although some token types (e.g., CW20 tokens) may require another connection
+	  - See: [Enabling IBC transfers](https://docs.osmosis.zone/overview/integrate/transfer#enabling-ibc-transfers) and [Setting up and operating relayer to Osmosis](https://docs.osmosis.zone/overview/integrate/transfer#setting-up-and-operating-a-relayer-to-osmosis)
+  - Registered IBC Connection at the Cosmos Chain Registry.
+- There exists liquidity of the asset on Osmosis.
+	- See: [Pool Setup Guide](https://docs.osmosis.zone/overview/integrate/pool-setup) for the CLI command to create a pool.
+- Assets listed on CoinGecko (optional, but highly recommended)
     - See: [How to enlist assets onto CoinGecko](../integrate/registration.md#how-to-enlist-an-asset-onto-coingecko)
 
 ### Requirements
 
-- Designate IBC Connection details:
-    - Source channel (Osmosis' channel to the registering chain)
-    - Destination channel (Registering chain's channel to Osmosis)
+- Chain data and services:
+  - [Chain Registry] `chain_name`.
+    - E.G., `cosmoshub` is the registered chain_name for Cosmos Hub.
+  - Block Explorer Transaction URL
+    - Mintscan is a preferred default
+  - Working RPC and REST endpoints
+    - Must not block the Osmosis Domain.
+      - Note that many Cosmos SDK RPC Nodes have CORS blocking by default
+    - RPC node must have Secure Web Sockets (wss://) protocol enabled.
 - Asset data:
-    - IBC denomination (when the asset is transferred to Osmosis, the base denomination looks like "ibc/...")
-        - E.g., For ATOM: `"base": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",`
-    - Name, symbol, exponent, etc.
-    - CoinGecko ID (optional, but should be included if and when there is one)
-        - Refer to the latest [CoinGecko Coins List](https://api.coingecko.com/api/v3/coins/list)
-- Token Logo Image files (both .png and .svg is recommended)
-    - Note: Currently, a .png is required to be able to render on [info.osmosis.zone](https://info.osmosis.zone)
-- Basic understanding of GitHub, knowing how to fork a respository, create a branch, commit changes, and submit a Pull Request
+  - Base denomination on source chain
+    - e.g., 'uatom' is the `base_denom` (i.e., the unique and immutable indivisible denomination unit) of ATOM
+  - IBC Path
+    - Generally describes to the 'path' (IBC hops) that the asset takes to get to Osmosis
+      - Every IBC hop is described in the path, including destination chain port and destination chain channel-id
+    - Used as input for the IBC Hash function to determine the asset denomination on the destination chain.
+      - IBC denoms always appear as: 'ibc/{SHA256 HASH of IBC Path}'
+    - In some rare cases, some characters in the source chain's base_denom or replaced with other characters.
+  - Whether the Asset is bridged (not referring to IBC transfers)
 
 ### Steps
 
-1. Review the [Osmosis Assetlists Registry](https://github.com/osmosis-labs/assetlists) docs:
+1. Review the [Osmosis Assetlists Registry](https://github.com/osmosis-labs/assetlists) docs and schema:
     1. [README.md](https://github.com/osmosis-labs/assetlists/blob/main/README.md)
-    2. [assetlist.schema.json](https://github.com/osmosis-labs/assetlists/blob/main/assetlist.schema.json)
-2. Submit a pull request with necessary changes to the following:
-    - `osmosis-1/osmosis-frontier.assetlist.json`:
-        - Be sure to include the CoinGecko ID if one exists
-    - `images/`
-        - Add token logo images
+    2. [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md)
+    3. [assetlist.schema.json](https://github.com/osmosis-labs/assetlists/blob/main/assetlist.schema.json)
+2. Submit a pull request with necessary changes to enlist the asset:
+  - Ensure the source chain in included in `osmosis-1/osmosis.zone_chains.json`.
+    - If not yet registered, add the chain object to the end of the `chains` array.
+    - Include `chain_name`, `rpc`, `rest`, `explorer_tx_url`, and `keplr_features`.
+      - E.G.,
+        
+      ```
+        {
+          "chain_name": "osmosis",
+          "rpc": "https://rpc-osmosis.keplr.app",
+          "rest": "https://lcd-osmosis.keplr.app",
+          "explorer_tx_url": "https://www.mintscan.io/osmosis/txs/${txHash}",
+          "keplr_features": [
+            "ibc-go",
+            "ibc-transfer",
+            "cosmwasm",
+            "wasmd_0.24+",
+            "osmosis-txfees"
+          ]
+        }
+      ```
+  - Add the asset to the `osmosis-1/osmosis.zone_assets.json` file.
+    - Add the new asset object to the end of the `assets` array.
+    - Include `base_denom`, `chain_name`, and `path`.
+    - New additions always must always start with `"osmosis_unlisted": true
+      - This allows the Osmosis team to validate via preview mode that the asset appears and behaves correctly on Osmosis Zone.
+    - New additions always default with having `"osmosis_verified": false
+      - Once assets are fully integrated, the asset can then be upgraded to "Verified" status.
+      - See [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) for details on upgrading an asset to Verified status.
+    - If adding a stablecoin, please include the `peg_mechanism`
+      - E.G., `"peg_mechanism": "collateralized"`
+    - If transferring the asset is not a simple IBC transfer, but requires another bridging/transfer interface, provide the URL(s) for the Deposit and Withdraw functions in the `transfer_methods` array within the asset's object.
+    - E.G.,
+      
+    ```
+    {
+      "chain_name": "terra",
+      "base_denom": "uluna",
+      "path": "transfer/channel-72/uluna",
+      "osmosis_verified": true,
+      "override_properties": {
+        "name": "Luna Classic"
+      },
+      "transfer_methods": [
+        {
+          "name": "Terra Bridge",
+          "type": "external_interface",
+          "deposit_url": "https://bridge.terra.money",
+          "withdraw_url": "https://bridge.terra.money"
+        }
+      ]
+    },
+    ```
+  - In the Pull Request, briefly describe the change, and complete the checklist as thoroughly as possible.
+    - New Pull Requests will automatically initialize with a description template that includes the checklist.
+    - Be sure to describe the plan for onchain liquidity, and provide a Pool ID once one exists.
+    - The PR reviewers will assist with any questions.
+    - If requested, a preview link to Osmosis Zone that shows the new asset can be provided.
+      - From the preview, a Weighted liquidity pool can be created. However, note that a Supercharged (or newer) pool type is recommended.
+    - Be sure to check back to the PR regularly to check for any questions, comments, and additional action items required to complete the listing process.
 
 
-## How to Register a bech32 Prefix onto SLIP173
+## Step 3 (optional): Complete the Asset Integration
 
-### Purpose
-
-CosmosSDK Chain addresses can be represented with a chain-specific string preceding a hash, which helps identify to which chain an address belongs. They are registered on [SLIP173](https://github.com/satoshilabs/slips/blob/master/slip-0173.md)
-
-### Prerequisites
-
-- Chain configured to use bech32 prefixes in wallet addresses
-    - Note: A bech32 prefix may still be registered, even before the chain is configured to use the prefixes, but only if the configuration will happen soon.
-
-### Requirements
-
-- Chain data:
-    - Chain name
-    - Chain website
-    - bech32 prefix(es)
-        - Mainnet
-        - Testnet (optional)
-        - Regtest (optional)
-        - Note: The bech32 prefix must be unique among all registered prefixes. E.g., a new mainnet prefix cannot match a prefix already registered as a testnet prefix.
-- Basic understanding of GitHub, knowing how to fork, create a branch, commit changes, and submit a Pull Request
-
-### Steps
-
-1. Review the [SLIP173 Registry](https://github.com/satoshilabs/slips/blob/master/slip-0173.md):
-2. Submit a pull request with necessary changes to the following:
-    - `slip-0173.md`:
-        - Add the chain name (as a link to the website) and prefix(es) into the *Registered human-readable parts* table
-
-
-## How to Enlist an Asset onto CoinGecko
-
-### Purpose
-
-CoinGecko ([CoinGecko.com](https://coingecko.com)) is cryptocurrency price aggregator which can provide asset price data directly to Osmosis Zone via API. Check out their [FAQ](https://www.coingecko.com/en/faq) to learn more.
-
-Osmosis embraces CoinGecko price feeds and prioritizes CoinGecko prices over Osmosis pool spot prices on Osmosis Zone. If as asset is not yet registered on CoinGecko, it should aim to do so. This procedure will guide project administrators to register their Asset onto CoinGecko.
-
-### Prerequisites
-
-- Chain mainnet is live
-
-From [coingecko.com/en/methodology](https://www.coingecko.com/en/methodology):
-- Working, functional website that has sufficient information on cryptoasset that is being listed. Websites with no information on purpose, team or social media profiles will be considered as invalid.
-    - Website must be owned by the project/maintaining team. Websites hosted on website builders (i.e Wix) will not be accepted.
-- Working block explorer
-- Listed on at least one (1) active exchanges where CoinGecko is integrated with.
-    - Note: Because Osmosis is integrated with CoinGecko, this will automatically be fullfilled once a Liquidity Pool containing the new Asset is created on Osmosis.
-    - See: [How to Add an Asset onto the Osmosis Assets Page](../integrate/frontend.md#how-to-add-an-asset-onto-the-osmosis-assets-page)
-
-### Requirements
-
-- Asset data:
-    - Name (e.g., 'Cosmos Hub')
-    - ID (e.g., 'cosmos')
-    - Symbol (e.g., 'ATOM')
-    - Circulating Supply
-    - Total Supply
-    - Osmosis Address (i.e., the 'ibc/...' denom on Osmosis)
-
-### Steps
-
-1. Review CoinGecko's [Methodology page](https://www.coingecko.com/en/methodology)
-	1. Pay special attention to the following sections:
-        - 'Listings',
-        - 'Listing Criteria',
-        - 'Do's and Don'ts for Listing Submission', and
-        - 'Listing Process Flow'
-2. Fill in and submit a 'CoinGecko Request Form' (a current link can be found on their 'Methodology' page)
-
+To create an ideal user experience when interacting with an Asset on Osmosios Zone, it is best to ensure that all metadata is registered, dependent data sources have all data about the asset, and that there is sufficient and efficient liquidity of the asset on Osmosis. See [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) for details.
